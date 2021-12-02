@@ -2,7 +2,7 @@ import os
 import unittest
 import train
 
-from test.fetch_tests import assert_shapes
+from test.test_fetch import assert_shapes
 
 class TestTrain(unittest.TestCase):
     __filepath__ = os.path.abspath(os.path.join(

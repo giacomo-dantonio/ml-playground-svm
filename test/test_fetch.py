@@ -27,6 +27,7 @@ class TestFetch(unittest.TestCase):
         if os.path.exists(self.__filepath__):
             os.remove(self.__filepath__)
 
+    @unittest.skip("This test is slow. Comment this line to run the test manually.")
     def test_fetch(self):
         """Fetch the MNIST dataset and save it to a local file."""
         fetch.download_nist(self.__filepath__)
