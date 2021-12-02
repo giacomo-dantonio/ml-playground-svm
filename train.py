@@ -120,7 +120,9 @@ def _make_argparser() -> argparse.ArgumentParser:
         "-g",
         "--gridsearch",
         action="store_true",
-        help="Perform a grid search for optimizing the hyperparameters.")
+        help="Perform a grid search for optimizing the hyperparameters. "
+            "If specified the model hyperparameters "
+            "(e.g. --gamma and --regularization) are ignored.")
 
     parser.add_argument(
         "-d",
@@ -149,6 +151,24 @@ def _make_argparser() -> argparse.ArgumentParser:
     )
 
     parser.add_argument(
+        "-C",
+        "--regularization",
+        type=int,
+        default=10,
+        help="Regularization parameter. "
+            "The strength of the regularization is inversely proportional to C. "
+            "Must be strictly positive. The penalty is a squared l2 penalty"
+    )
+
+    parser.add_argument(
+        "-G",
+        "--gamma",
+        default="auto",
+        help="Kernel coefficient for 'rbf', 'poly' and 'sigmoid'. "
+            "Can be a float value or one of 'scale' and 'auto'"
+    )
+
+    parser.add_argument(
         "-k",
         "--kernel",
         default="rbf",
@@ -170,10 +190,17 @@ if __name__ == "__main__":
     X_train, y_train, X_val, y_val, X_test, y_test = load(args.dataset)
 
     if args.gridsearch:
-        model = grid_search(X_val, y_val)
+        model = grid_search(X_val, y_val, kernel=args.kernel)
     else:
-        # FIXME: read parameters from args
-        model = _make_pipeline(kernel=args.kernel)
+        try:
+            gamma = float(args.gamma)
+        except (TypeError, ValueError):
+            gamma = args._gamma
+
+        model = _make_pipeline(
+            kernel=args.kernel,
+            C=args.regularization,
+            gamma=args.gamma)
 
     train(model, X_train, y_train)
 
