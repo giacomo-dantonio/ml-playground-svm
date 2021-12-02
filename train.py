@@ -71,7 +71,7 @@ def grid_search(X, y, kernel="rbf"):
         search.fit(X, y)
 
     _logger.info("Search time: {:.2f}s".format(t.elapsed))
-    _logger.info("Search Accuracy:", search.best_score_)
+    _logger.info("Search Accuracy: %s", search.best_score_)
     _logger.info("Best parameters: %s\n", json.dumps(search.best_params_, indent=2))
 
     return search.best_estimator_
@@ -180,4 +180,4 @@ if __name__ == "__main__":
     joblib.dump(model, args.outpath)
 
     if args.metrics:
-        _logger.info(_show_metrics(args.dataset, model))
+        _logger.info(_show_metrics(model, X_test, y_test))
