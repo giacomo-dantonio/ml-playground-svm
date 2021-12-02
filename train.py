@@ -195,7 +195,7 @@ if __name__ == "__main__":
         try:
             gamma = float(args.gamma)
         except (TypeError, ValueError):
-            gamma = args._gamma
+            gamma = args.gamma
 
         model = _make_pipeline(
             kernel=args.kernel,
