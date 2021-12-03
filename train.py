@@ -78,7 +78,6 @@ def grid_search(X, y, kernel="rbf"):
 
 
 def train(model, X, y):
-    _logger.info("Training an SVM classifier.")
     with utils.Timer() as t:
         model.fit(X, y)
 
@@ -202,6 +201,7 @@ if __name__ == "__main__":
             C=args.regularization,
             gamma=args.gamma)
 
+    _logger.info("Training an SVM classifier with %s kernel", args.kernel)
     train(model, X_train, y_train)
 
     joblib.dump(model, args.outpath)
