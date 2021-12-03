@@ -1,5 +1,6 @@
 import fetch
 import h5py
+import numpy as np
 import os
 import unittest
 
@@ -51,6 +52,32 @@ class TestFetch(unittest.TestCase):
                 h5_file["X_test"],
                 h5_file["y_test"],
             )
+
+    def test_augment_shift(self):
+        filepath = os.path.abspath(os.path.join(
+            os.path.dirname(__file__), "test_data.h5"))
+
+        with h5py.File(filepath, "r") as h5_file:
+            X_test = np.array(h5_file["X_test"])
+            y_test = np.array(h5_file["y_test"])
+
+        augmented, labels = fetch.augment_dataset(X_test, y_test, shift=True, rotate=0)
+
+        self.assertEqual(5 * X_test.shape[0], augmented.shape[0])
+        self.assertEqual(5 * y_test.shape[0], labels.shape[0])
+
+    def test_augment_rotate(self):
+        filepath = os.path.abspath(os.path.join(
+            os.path.dirname(__file__), "test_data.h5"))
+
+        with h5py.File(filepath, "r") as h5_file:
+            X_test = np.array(h5_file["X_test"])
+            y_test = np.array(h5_file["y_test"])
+
+        augmented, labels = fetch.augment_dataset(X_test, y_test, shift=False, rotate=5)
+
+        self.assertEqual(11 * X_test.shape[0], augmented.shape[0])
+        self.assertEqual(11 * y_test.shape[0], labels.shape[0])
 
 if __name__ == '__main__':
     unittest.main()
