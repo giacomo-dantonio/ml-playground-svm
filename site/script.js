@@ -11,6 +11,7 @@ canvas.height = size;
 
 const ctx = canvas.getContext('2d');
 ctx.lineWidth = 20;
+clearCanvas();
 
 let points = [];
 let drawing = false;
@@ -22,6 +23,7 @@ function startDrawing() {
 
 function stopDrawing() {
     drawing = false;
+    predict();
 }
 
 // draw a line between the last 10 points
@@ -49,7 +51,22 @@ function addPoint(event) {
 }
 
 function clearCanvas() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "white"
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
+
+async function predict() {
+    const digit = canvas.toDataURL('image/png');
+    const rawResponse = await fetch('http://127.0.0.1:5000/predict', {
+        method: 'POST',
+        headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ digit })
+    });
+    const content = await rawResponse.json();
+    console.log(content);
 }
 
 canvas.onmousedown = startDrawing;
