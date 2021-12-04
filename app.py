@@ -6,19 +6,17 @@ import re
 
 from flask import Flask
 from flask import request
-from flask_cors import CORS
 
 import predict
 
 app = Flask(__name__)
-CORS(app)
 
 b64exp = re.compile("data:(?P<mime_type>.*);base64,(?P<base64>.*)$")
 model = joblib.load("model_rbf.pkl")
 
 @app.route("/")
-def hello_world():
-    return "<p>Hello, World!</p>"
+def index_route():
+    return app.send_static_file("index.html")
 
 @app.route("/predict", methods=["POST"])
 def predict_digit():
