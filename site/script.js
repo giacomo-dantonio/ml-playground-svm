@@ -1,11 +1,12 @@
 const body = document.querySelector("body");
-const canvasContainer = document.querySelector("div.canvas");
+const container = document.querySelector("div.canvas");
+const outputDiv = document.querySelector("div.prediction");
 const canvas = document.querySelector("canvas");
 
 // Resize canvas.
 // This cannot be done in CSS, because that would mess up
 // the coordinate system on the canvas. 
-const size = Math.min(canvasContainer.clientWidth, canvasContainer.clientHeight);
+const size = Math.min(container.clientWidth, container.clientHeight);
 canvas.width = size;
 canvas.height = size;
 
@@ -51,6 +52,7 @@ function addPoint(event) {
 }
 
 function clearCanvas() {
+    outputDiv.innerHTML = "";
     ctx.fillStyle = "white"
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
@@ -67,8 +69,14 @@ async function predict() {
     });
     const content = await rawResponse.json();
     console.log(content);
+
+    const outputDiv = document.querySelector("div.prediction");
+    outputDiv.innerHTML = content.prediction;
 }
 
 canvas.onmousedown = startDrawing;
+canvas.ontouchstart = startDrawing;
 canvas.onmouseup = stopDrawing;
+canvas.ontouchend = stopDrawing;
 canvas.onmousemove = addPoint;
+canvas.ontouchmove = addPoint;

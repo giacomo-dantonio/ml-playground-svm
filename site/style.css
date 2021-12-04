@@ -1,38 +1,44 @@
 body {
-  background-color: cornflowerblue;
   margin: 0 0;
 
   height: 100vh;
   display: flex;
   flex-direction: column;
+
+  font-family: 'Rubik', sans-serif;
 }
 
 div.header {
-  background-color: cornsilk;
+  text-align: center;
+}
+
+div.content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
 }
 
 div.column {
-  background-color: crimson;
   width: 50%;
-  flex-grow: 1;
+  height: 100%;
+  padding: 0px 5px;
 
   display: flex;
   flex-direction: column;
-}
-
-div.canvas {
-  background-color: cyan;
-  flex-grow: 1;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 canvas {
-  background-color: white;
+  border: 3px solid black;
 }
 
-div.toolbar {
-  background-color: darkblue;
+button.clear {
+  font-size: 2rem;
+
+  border: 3px solid black;
+  margin-top: 5px;
+}
+
+div.prediction {
+  font-size: 70vmin;
+  text-align: center;
 }

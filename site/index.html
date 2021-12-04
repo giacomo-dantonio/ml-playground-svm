@@ -1,17 +1,22 @@
 <html>
   <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap" rel="stylesheet"> 
+
     <link href="style.css" rel="stylesheet" type="text/css"/>
   </head>
   <body>
     <div class="header">
       <h1>MNIST digit prediction</h1>
     </div>
-    <div class="column">
-      <div class="canvas">
-        <canvas width="300" height="300"/>
+    <div class="content">
+      <div class="column canvas">
+        <canvas width="300" height="300"></canvas>
+        <button class="clear" onclick="clearCanvas()">Clear</button>
       </div>
-      <div class="toolbar">
-        <button onclick="clearCanvas()">Clear</button>
+      <div class="column prediction">
+        &nbsp;
       </div>
     </div>
 

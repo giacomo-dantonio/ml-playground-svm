@@ -201,7 +201,7 @@ if __name__ == "__main__":
         model = _make_pipeline(
             kernel=args.kernel,
             C=args.regularization,
-            gamma=args.gamma)
+            gamma=gamma)
 
     train(model, X_train, y_train)
 
