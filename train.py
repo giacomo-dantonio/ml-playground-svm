@@ -18,7 +18,8 @@ _search_parameters = {
     "rbf": {
         "clf__kernel": ["rbf"],
         "clf__C": [0.1, 1, 10, 100],
-        "clf__gamma": ["scale", "auto"],
+        # "clf__gamma": ["scale", "auto"],
+        "clf__gamma": [0.1, 1, 10, 100],
     },
     "sigmoid": {
         "clf__kernel": ["sigmoid"],
@@ -199,7 +200,7 @@ if __name__ == "__main__":
         model = _make_pipeline(
             kernel=args.kernel,
             C=args.regularization,
-            gamma=args.gamma)
+            gamma=gamma)
 
     _logger.info("Training an SVM classifier with %s kernel", args.kernel)
     train(model, X_train, y_train)

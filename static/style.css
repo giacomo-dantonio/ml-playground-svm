@@ -1,0 +1,44 @@
+body {
+  margin: 0 0;
+
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  font-family: 'Rubik', sans-serif;
+}
+
+div.header {
+  text-align: center;
+}
+
+div.content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+}
+
+div.column {
+  width: 50%;
+  height: 100%;
+  padding: 0px 5px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+canvas {
+  border: 3px solid black;
+}
+
+button.clear {
+  font-size: 2rem;
+
+  border: 3px solid black;
+  margin-top: 5px;
+}
+
+div.prediction {
+  font-size: 70vmin;
+  text-align: center;
+}
