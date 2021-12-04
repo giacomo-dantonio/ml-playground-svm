@@ -39,7 +39,7 @@ def augment_dataset(
 
     return np.array(augmented_rows), np.array(augmented_labels)
 
-def download_nist(filepath : str, augment = False):
+def download_nist(filepath : str, shift = False, rotate = False):
     """
         Fetch the mnist_784 dataset from openml (https://www.openml.org/d/554).
         Splits it into training, validation, and test set.
@@ -59,10 +59,19 @@ def download_nist(filepath : str, augment = False):
     X_train, X_val, y_train, y_val = model_selection.train_test_split(
         X_train, y_train, test_size=10000)
 
-    if augment:
-        X_train, y_train = augment_dataset(X_train, y_train, shift=True, rotate=2)
-        X_val, y_val = augment_dataset(X_val, y_val, shift=True, rotate=2)
-        X_test, y_test = augment_dataset(X_test, y_test, shift=True, rotate=2)
+    if shift or rotate:
+        X_train, y_train = augment_dataset(
+            X_train, y_train,
+            shift=shift,
+            rotate=2 if rotate else 0)
+        X_val, y_val = augment_dataset(
+            X_val, y_val,
+            shift=shift,
+            rotate=2 if rotate else 0)
+        X_test, y_test = augment_dataset(
+            X_test, y_test,
+            shift=shift,
+            rotate=2 if rotate else 0)
 
     with h5py.File(filepath, "w") as f:
         f.create_dataset("X_train", data=X_train)
@@ -98,10 +107,17 @@ def _make_argparser() -> argparse.ArgumentParser:
         help="The filepath where the HDF5 dataset will be saved.")
 
     parser.add_argument(
-        "-a",
-        "--augment",
+        "-s",
+        "--shift",
         action="store_true",
-        help="Augment the dataset by rotating and shifting the images."
+        help="Augment the dataset by shifting the images."
+    )
+
+    parser.add_argument(
+        "-r",
+        "--rotate",
+        action="store_true",
+        help="Augment the dataset by rotating the images."
     )
 
     return parser
@@ -112,4 +128,4 @@ if __name__ == "__main__":
 
     if (args.outpath is not None):
         filepath = os.path.abspath(args.outpath)
-        download_nist(filepath, args.augment)
+        download_nist(filepath, args.shift, args.rotate)

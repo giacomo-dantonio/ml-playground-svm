@@ -18,7 +18,8 @@ _search_parameters = {
     "rbf": {
         "clf__kernel": ["rbf"],
         "clf__C": [0.1, 1, 10, 100],
-        "clf__gamma": ["scale", "auto"],
+        # "clf__gamma": ["scale", "auto"],
+        "clf__gamma": [0.1, 1, 10, 100],
     },
     "sigmoid": {
         "clf__kernel": ["sigmoid"],
