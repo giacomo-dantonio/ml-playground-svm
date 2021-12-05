@@ -1,6 +1,6 @@
 # MNIST classification using SVM models
 
-This is the solution of Exercise 9 of Chapter 4 of the book
+This is the solution of Exercise 9 of Chapter 5 of the book
 *Hands-On Machine Learning with Scikit-Learn, Keras & Tensorflow*.
 
 It classifies digits between 0 and 9. It is trained using the 
