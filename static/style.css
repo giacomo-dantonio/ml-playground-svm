@@ -1,11 +1,7 @@
 body {
   margin: 0 0;
-
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-
   font-family: 'Rubik', sans-serif;
+  background-color: whitesmoke;
 }
 
 div.header {
@@ -13,18 +9,17 @@ div.header {
 }
 
 div.content {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: row;
+  height: calc(100vh - 90px);
 }
 
 div.column {
-  width: 50%;
+  width: calc(50% - 12px);
   height: 100%;
   padding: 0px 5px;
+  display: inline-block;
 
-  display: flex;
-  flex-direction: column;
+  text-align: center;
+  vertical-align: top;
 }
 
 canvas {
@@ -36,6 +31,7 @@ button.clear {
 
   border: 3px solid black;
   margin-top: 5px;
+  width: 100%;
 }
 
 div.prediction {

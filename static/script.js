@@ -1,21 +1,60 @@
+// DOM Elements
+
 const body = document.querySelector("body");
 const container = document.querySelector("div.canvas");
 const outputDiv = document.querySelector("div.prediction");
+
 const canvas = document.querySelector("canvas");
-
-// Resize canvas.
-// This cannot be done in CSS, because that would mess up
-// the coordinate system on the canvas. 
-const size = Math.min(container.clientWidth, container.clientHeight);
-canvas.width = size;
-canvas.height = size;
-
 const ctx = canvas.getContext('2d');
-ctx.lineWidth = 20;
-clearCanvas();
+
+// Application state
 
 let points = [];
 let drawing = false;
+
+// Event listeners
+
+canvas.addEventListener('mousedown', startDrawing);
+canvas.addEventListener('mouseup', stopDrawing);
+canvas.addEventListener('mousemove', addPoint);
+window.addEventListener('resize', resizeCanvas);
+
+// Initial Setup
+
+resizeCanvas();
+clearCanvas();
+
+// Functions
+
+// This cannot be done in CSS, because that would mess up
+// the coordinate system on the canvas. 
+function resizeCanvas() {
+    function outerHeight(el) {
+        let height = el.offsetHeight;
+        var style = getComputedStyle(el);
+        
+        height += parseInt(style.marginTop) + parseInt(style.marginBottom);
+        return height;
+    }
+
+    let height = container.clientHeight - 6;
+    for (const child of document.querySelectorAll("div.canvas > :not(:first-child)"))
+    {
+        height -= outerHeight(child);
+    }
+
+    const size = Math.min(container.clientWidth, height);
+
+    canvas.width = size;
+    canvas.height = size;
+    canvas.style.width = size;
+    canvas.style.height = size;
+
+    const button = document.querySelector("button.clear");
+    button.style.width = size + 6;
+
+    clearCanvas();
+}
 
 function startDrawing() {
     points = [];
@@ -30,6 +69,8 @@ function stopDrawing() {
 // draw a line between the last 10 points
 function drawPoints() {
     const tail = points.slice(-10);
+
+    ctx.lineWidth = 20;
     ctx.beginPath();
 
     const [startX, startY] = tail[0];
@@ -73,10 +114,3 @@ async function predict() {
     const outputDiv = document.querySelector("div.prediction");
     outputDiv.innerHTML = content.prediction;
 }
-
-canvas.onmousedown = startDrawing;
-canvas.ontouchstart = startDrawing;
-canvas.onmouseup = stopDrawing;
-canvas.ontouchend = stopDrawing;
-canvas.onmousemove = addPoint;
-canvas.ontouchmove = addPoint;
