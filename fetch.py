@@ -1,3 +1,11 @@
+"""
+Fetch mnist_784 dataset from openml (https://www.openml.org/d/554) and
+splits it into training, validation, and test set.
+
+It also supports feature augmentation by shifting and/or rotating
+the input data.
+"""
+
 import argparse
 import h5py
 import math
@@ -16,6 +24,24 @@ def augment_dataset(
     rotate = 0,
     max_rotation = math.pi / 4.0
 ) -> typing.Tuple[np.array, np.array]:
+    """
+    Augment data by shifting and/or rotating the features.
+
+    Parameters:
+
+    dset    The feature set to be augmented.
+    labels  The labels corresponding to the feature set.
+    shift   If True the features are shifted in the four main directions
+            (up, down, left, right)
+    rotate  If > 0 the features are rotate of the given amount on
+            the left and on the right. This means, the result dataset
+            will be added 2 * rotate features.
+    max_rotation    The maximum amount of rotation.
+                    The features are rotated in fraction angles of this.
+                    I.e. if rotate is 2, the features are rotated by
+                    the following angles:
+                    -max_rotation, -max_rotation/2, max_rotation/2, max_rotation.
+    """
     augmented_rows = []
     augmented_labels = []
     for (row, label) in zip(dset, labels):
@@ -44,6 +70,12 @@ def download_nist(filepath : str, shift = False, rotate = False):
         Fetch the mnist_784 dataset from openml (https://www.openml.org/d/554).
         Splits it into training, validation, and test set.
         And write it to `filepath` in the hdf5 format.
+
+        Parameters:
+
+        filepath    The output path, to which the dataset will be exported.
+        shift       If set the dataset is augmented by shifting the features.
+        rotate      If set the dataset is augmented by rotating the features.
     """
 
     mnist = datasets.fetch_openml('mnist_784', version=1)

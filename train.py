@@ -1,3 +1,7 @@
+"""
+Train an SVM model on the mnist dataset, downloaded using the fetch module.
+"""
+
 import argparse
 import h5py
 import joblib
@@ -36,7 +40,11 @@ _search_parameters = {
 
 def load(filepath):
     """
-    Loads the MNIST dataset from an HDF5 file, as exported from the `fetch` module.
+    Loads the MNIST dataset from an HDF5 file, as exported from the fetch module.
+
+    Parameters:
+
+    filepath    The path to the exported dataset.
     """
 
     _logger.info("Loading dataset from %s", filepath)
@@ -55,6 +63,12 @@ def grid_search(X, y, kernel="rbf"):
     """
     Perform a grid search on a small validation set and returns
     the best model.
+
+    Parameters:
+
+    X       The features of the validation set
+    y       The labels of the validation set
+    kernel  The SVM kernel to be used.
     """
 
     _logger.info("Performing grid search.")
@@ -78,6 +92,15 @@ def grid_search(X, y, kernel="rbf"):
 
 
 def train(model, X, y):
+    """
+    Train a model on the training set.
+
+    Parameters:
+
+    model   The model to be trained.
+    X       The features of the training set.
+    y       The labels of the training set.
+    """
     with utils.Timer() as t:
         model.fit(X, y)
 
