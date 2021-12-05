@@ -17,9 +17,8 @@ _logger = logging.getLogger(__name__)
 _search_parameters = {
     "rbf": {
         "clf__kernel": ["rbf"],
-        "clf__C": [0.1, 1, 10, 100],
-        # "clf__gamma": ["scale", "auto"],
-        "clf__gamma": [0.1, 1, 10, 100],
+        "clf__C": [2, 4, 8, 10],
+        "clf__gamma": ["scale", "auto"],
     },
     "sigmoid": {
         "clf__kernel": ["sigmoid"],
@@ -154,7 +153,7 @@ def _make_argparser() -> argparse.ArgumentParser:
         "-C",
         "--regularization",
         type=int,
-        default=10,
+        default=8,
         help="Regularization parameter. "
             "The strength of the regularization is inversely proportional to C. "
             "Must be strictly positive. The penalty is a squared l2 penalty"
@@ -163,7 +162,7 @@ def _make_argparser() -> argparse.ArgumentParser:
     parser.add_argument(
         "-G",
         "--gamma",
-        default="auto",
+        default="scale",
         help="Kernel coefficient for 'rbf', 'poly' and 'sigmoid'. "
             "Can be a float value or one of 'scale' and 'auto'"
     )
