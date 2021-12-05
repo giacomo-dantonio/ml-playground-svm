@@ -8,7 +8,7 @@ It classifies digits between 0 and 9. It is trained using the
 
 It also provides a simple web interface for testing the predictions,
 which can be run with the following command (make sure to install the
-dependencies before):
+dependencies and generate the model before):
 
     $ flask run --host=0.0.0.0
 
@@ -24,6 +24,13 @@ dependencies with
     $ python3 -m venv venv
     $ source ./venv/bin/activate
     $ pip install -r requirements.txt
+
+## TLDR
+
+To generate and train the model use the following commands:
+
+    $ python -m fetch
+    $ python -m train -k rbf
 
 ## Using
 
