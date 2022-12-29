@@ -12,7 +12,7 @@ import predict
 app = Flask(__name__)
 
 b64exp = re.compile("data:(?P<mime_type>.*);base64,(?P<base64>.*)$")
-model = joblib.load("model_rbf.pkl")
+model = joblib.load("model_rbf_shifted.pkl")
 
 @app.route("/")
 def index_route():
